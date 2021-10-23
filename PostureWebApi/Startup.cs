@@ -21,10 +21,10 @@ namespace PostureWebApi
         {
             Configuration = configuration;
 
-            using (var client = new DatabaseContext())
-            {
-                client.Database.EnsureCreated();
-            }
+            //using (var client = new DatabaseContext())
+            //{
+            //    client.Database.EnsureCreated();
+            //}
         }
 
         public IConfiguration Configuration { get; }
@@ -32,12 +32,17 @@ namespace PostureWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddNewtonsoftJson();
+            services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PostureWebApi", Version = "v1" });
             });
-            services.AddEntityFrameworkSqlite().AddDbContext<DatabaseContext>();
+            //services.AddControllers().AddNewtonsoftJson();
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "PostureWebApi", Version = "v1" });
+            //});
+            //services.AddEntityFrameworkSqlite().AddDbContext<DatabaseContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

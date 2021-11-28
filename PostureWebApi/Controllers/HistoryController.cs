@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PostureWebApi.DBContexts;
+using PostureWebApi.JsonModels;
 using PostureWebApi.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -34,14 +35,13 @@ namespace PostureWebApi.Controllers
         public IEnumerable<PostureState> Get()
         {
             return _context.postureHistory.ToList();
-            //return new string[] { "value1", "value2" };
         }
 
         // GET api/<HistoryController>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return "value";
+            return "value2";
         }
 
         [HttpPut("{id}")]
@@ -63,11 +63,28 @@ namespace PostureWebApi.Controllers
         }
 
         // POST api/<HistoryController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("{id}")]
+        public string Post(string id)
         {
-            _context.postureHistory.Add(new PostureState() {time = DateTime.Now });
+            _context.postureHistory.Add(new PostureState() { time = DateTime.Now });
             _context.SaveChanges();
+
+            return id;
+        }
+
+        // POST api/<HistoryController>
+        [HttpPost("value/{username}")]
+        public string Post2(string username, [FromBody] AddHistory addition)
+        {
+            User user = _context.users.SingleOrDefault(user => user.UserName == username);
+            if (user == null)
+            {
+                return "User not exists";
+            }
+            _context.postureHistory.Add(new PostureState() {UserId = user.Id, quality = addition.quality, time = DateTime.Now });
+            _context.SaveChanges();
+
+            return addition.quality.ToString();
         }
 
         // PUT api/<HistoryController>/5

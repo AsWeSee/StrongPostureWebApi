@@ -13,6 +13,7 @@ namespace PostureWebApi.DBContexts
         {
         }
         public DbSet<PostureState> postureHistory { get; set; }
+        public DbSet<User> users { get; set; }
 
     }
 }

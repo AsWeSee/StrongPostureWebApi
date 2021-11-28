@@ -8,7 +8,10 @@ namespace PostureWebApi.Models
     public class PostureState
     {
         public int Id { get; set; }
-        //public PostureQuality quality { get; set; }
+
+        public int UserId { get; set; }
+        
+        public PostureQuality quality { get; set; }
         public DateTime time { get; set; }
     }
 }

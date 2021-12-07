@@ -41,6 +41,10 @@ namespace PostureWebApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PostureWebApi", Version = "v1" });
             });
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+            }));
 
             //services.AddDbContext<HistoryContext>(options =>
             //    options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
@@ -79,6 +83,7 @@ namespace PostureWebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("MyPolicy");
 
             if (env.IsDevelopment())
             {
